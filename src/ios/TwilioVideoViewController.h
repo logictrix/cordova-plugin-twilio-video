@@ -24,11 +24,15 @@
 
 // `TVIVideoView` created from a storyboard
 @property (weak, nonatomic) IBOutlet TVIVideoView *previewView;
+@property (weak, nonatomic) IBOutlet TVIVideoView *remoteContainerView;
 
 @property (nonatomic, weak) IBOutlet UIButton *disconnectButton;
 @property (nonatomic, weak) IBOutlet UIButton *micButton;
 @property (nonatomic, weak) IBOutlet UILabel *roomLabel;
+@property (nonatomic, weak) IBOutlet UILabel *roomTitle;
+@property (nonatomic, weak) IBOutlet UILabel *roomNumber;
 @property (nonatomic, weak) IBOutlet UILabel *roomLine;
+@property (nonatomic, weak) IBOutlet UITextField *chatMessage;
 @property (nonatomic, weak) IBOutlet UIButton *cameraSwitchButton;
 @property (nonatomic, weak) IBOutlet UIButton *videoButton;
 

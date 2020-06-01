@@ -116,7 +116,7 @@ NSString *const CLOSED = @"CLOSED";
 - (void)startPreview {
     // TVICameraCapturer is not supported with the Simulator.
     if ([self isSimulator]) {
-        [self.previewView removeFromSuperview];
+//        [self.previewView removeFromSuperview];
         return;
     }
     
@@ -138,6 +138,7 @@ NSString *const CLOSED = @"CLOSED";
         
         self.videoButton.hidden = NO;
         self.cameraSwitchButton.hidden = NO;
+        self.previewView.contentMode = UIViewContentModeScaleAspectFill;
         [self.previewView addGestureRecognizer:tap];
     }
 }
@@ -202,41 +203,42 @@ NSString *const CLOSED = @"CLOSED";
     // UIViewContentModeScaleAspectFit is the default mode when you create `TVIVideoView` programmatically.
     remoteView.contentMode = UIViewContentModeScaleAspectFill;
 
-    [self.view insertSubview:remoteView atIndex:0];
-    self.remoteView = remoteView;
+    [self.remoteContainerView insertSubview:remoteView atIndex:0];
     
+    self.remoteView = remoteView;
+
     NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:self.remoteView
                                                                attribute:NSLayoutAttributeCenterX
                                                                relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self.view
+                                                                  toItem:self.remoteContainerView
                                                                attribute:NSLayoutAttributeCenterX
                                                               multiplier:1
                                                                 constant:0];
-    [self.view addConstraint:centerX];
+    [self.remoteContainerView addConstraint:centerX];
     NSLayoutConstraint *centerY = [NSLayoutConstraint constraintWithItem:self.remoteView
                                                                attribute:NSLayoutAttributeCenterY
                                                                relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self.view
+                                                                  toItem:self.remoteContainerView
                                                                attribute:NSLayoutAttributeCenterY
                                                               multiplier:1
                                                                 constant:0];
-    [self.view addConstraint:centerY];
+    [self.remoteContainerView addConstraint:centerY];
     NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.remoteView
                                                              attribute:NSLayoutAttributeWidth
                                                              relatedBy:NSLayoutRelationEqual
-                                                                toItem:self.view
+                                                                toItem:self.remoteContainerView
                                                              attribute:NSLayoutAttributeWidth
                                                             multiplier:1
                                                               constant:0];
-    [self.view addConstraint:width];
+    [self.remoteContainerView addConstraint:width];
     NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:self.remoteView
                                                               attribute:NSLayoutAttributeHeight
                                                               relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.view
+                                                                 toItem:self.remoteContainerView
                                                               attribute:NSLayoutAttributeHeight
                                                              multiplier:1
                                                                constant:0];
-    [self.view addConstraint:height];
+    [self.remoteContainerView addConstraint:height];
 }
 
 // Reset the client ui status
@@ -268,14 +270,14 @@ NSString *const CLOSED = @"CLOSED";
     }
     [self logMessage: @"Connection error handled by the plugin"];
     UIAlertController * alert = [UIAlertController
-                                 alertControllerWithTitle:NULL
+                                 alertControllerWithTitle:@"Title"
                                  message: message
                                  preferredStyle:UIAlertControllerStyleAlert];
     
     //Add Buttons
     
     UIAlertAction* yesButton = [UIAlertAction
-                                actionWithTitle:[self.config i18nAccept]
+                                actionWithTitle:@"Accept"
                                 style:UIAlertActionStyleDefault
                                 handler: ^(UIAlertAction * action) {
                                     [self dismiss];
@@ -408,7 +410,7 @@ NSString *const CLOSED = @"CLOSED";
 
     if (self.remoteParticipant == participant) {
         [self setupRemoteView];
-        [videoTrack addRenderer:self.remoteView];
+        [videoTrack addRenderer:self.remoteContainerView];
     }
 }
 

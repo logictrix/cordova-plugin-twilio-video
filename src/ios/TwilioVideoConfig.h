@@ -6,6 +6,8 @@
 @property NSString *i18nConnectionError;
 @property NSString *i18nDisconnectedWithError;
 @property NSString *i18nAccept;
+@property NSString *title;
+@property NSString *message;
 @property BOOL handleErrorInApp;
 @property BOOL hangUpInApp;
 

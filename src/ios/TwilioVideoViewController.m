@@ -50,12 +50,21 @@ NSString *const CLOSED = @"CLOSED";
         self.disconnectButton.backgroundColor = [TwilioVideoConfig colorFromHexString:primaryColor];
     }
     
+    self.chatMessage.text = self.config.message;
+    self.roomTitle.text = self.config.title;
+
     NSString *secondaryColor = [self.config secondaryColorHex];
     if (secondaryColor != NULL) {
         self.micButton.backgroundColor = [TwilioVideoConfig colorFromHexString:secondaryColor];
         self.videoButton.backgroundColor = [TwilioVideoConfig colorFromHexString:secondaryColor];
         self.cameraSwitchButton.backgroundColor = [TwilioVideoConfig colorFromHexString:secondaryColor];
     }
+}
+
+-(void)updateConfig
+{
+    self.chatMessage.text = self.config.message;
+    self.roomTitle.text = self.config.title;
 }
 
 #pragma mark - Public
@@ -290,6 +299,18 @@ NSString *const CLOSED = @"CLOSED";
 - (void) dismiss {
     [[TwilioVideoManager getInstance] publishEvent: CLOSED];
     [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+-(IBAction)diceButtonPressed:(id)sender {
+    // We will toggle the mic to mute/unmute and change the title according to the user action.
+    NSDictionary * dict = @{@"name":@"value"};
+    [[TwilioVideoManager getInstance] publishEvent:@"dice" with: dict];
+}
+
+-(IBAction)moreButtonPressed:(id)sender {
+    // We will toggle the mic to mute/unmute and change the title according to the user action.
+    NSDictionary * dict = @{@"name":@"value"};
+    [[TwilioVideoManager getInstance] publishEvent:@"more" with: dict];
 }
 
 #pragma mark - TVIRoomDelegate

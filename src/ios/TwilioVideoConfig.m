@@ -5,6 +5,8 @@
 #define i18n_CONNECTION_ERROR_PROP          @"i18nConnectionError"
 #define i18n_DISCONNECTED_WITH_ERROR_PROP   @"i18nDisconnectedWithError"
 #define i18n_ACCEPT_PROP                    @"i18nAccept"
+#define TITLE                               @"title"
+#define MESSAGE                             @"message"
 #define HANDLE_ERROR_IN_APP                 @"handleErrorInApp"
 #define HANG_UP_IN_APP                      @"hangUpInApp"
 
@@ -24,6 +26,14 @@
     self.i18nAccept = [config objectForKey:i18n_ACCEPT_PROP];
     if (self.i18nAccept == NULL) {
         self.i18nAccept = @"Accept";
+    }
+    self.title = [config objectForKey:TITLE];
+    if (self.title == NULL) {
+        self.title = @"";
+    }
+    self.message = [config objectForKey:MESSAGE];
+    if (self.message == NULL) {
+        self.message = @"";
     }
     self.handleErrorInApp = [config objectForKey:HANDLE_ERROR_IN_APP];
     self.hangUpInApp = [config objectForKey:HANG_UP_IN_APP];

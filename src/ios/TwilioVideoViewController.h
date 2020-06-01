@@ -37,5 +37,6 @@
 @property (nonatomic, weak) IBOutlet UIButton *videoButton;
 
 - (void)connectToRoom:(NSString*)room token: (NSString *)token;
+-(void)updateConfig;
 
 @end

@@ -34,6 +34,37 @@
     });
 }
 
+- (void)updateConfig:(CDVInvokedUrlCommand*)command {
+    self.listenerCallbackID = command.callbackId;
+    NSArray *args = command.arguments;
+    NSString* room = args[0];
+    TwilioVideoConfig *config = [[TwilioVideoConfig alloc] init];
+    if ([args count] > 1) {
+        [config parse: command.arguments[1]];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+//        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"TwilioVideo" bundle:nil];
+        UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        
+        while (topController.presentedViewController) {
+            topController = topController.presentedViewController;
+        }
+        if([topController isKindOfClass:[TwilioVideoViewController class]])
+        {
+            TwilioVideoViewController *vc = (TwilioVideoViewController *)topController;
+            vc.config = config;
+            [vc updateConfig];
+        }
+        else
+        {
+            NSLog(@"TwilioVideoController not found !");
+        }
+        
+        
+    });
+}
+
 - (void)closeRoom:(CDVInvokedUrlCommand*)command {
     if ([[TwilioVideoManager getInstance] publishDisconnection]) {
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
